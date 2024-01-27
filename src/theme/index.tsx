@@ -1,8 +1,7 @@
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
 import '@fontsource-variable/onest'
-import { lightMode } from './lightMode'
-import { darkMode } from './darkMode'
+import { DARK_MODE, LIGHT_MODE } from './combinedColors'
 
 const config = {
   initialColorMode: 'dark',
@@ -10,7 +9,7 @@ const config = {
   styles: {
     global: {
       'html, body': {
-        backgroundColor: mode(lightMode.primary[400], darkMode.primary[400]),
+        backgroundColor: mode(LIGHT_MODE.primary[200], DARK_MODE.primary[950]),
         height: '100%',
         width: '100%',
         padding: 0,
@@ -26,7 +25,7 @@ const config = {
     body: "'Onest Variable', sans-serif",
     heading: "'Onest Variable', sans-serif",
   },
-  colors: mode(lightMode, darkMode),
+  colors: mode(LIGHT_MODE, DARK_MODE),
 }
 
 const customTheme = extendTheme({ config })
