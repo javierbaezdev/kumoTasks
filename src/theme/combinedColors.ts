@@ -15,7 +15,7 @@ const generalColors = {
     '900': '#263289',
     '950': '#161b50',
   },
-  javascript: {
+  javaScript: {
     '50': '#fcfcea',
     '100': '#faf7c7',
     '200': '#f6ed92',

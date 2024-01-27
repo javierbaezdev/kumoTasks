@@ -1,6 +1,6 @@
+import '@fontsource-variable/onest'
 import { extendTheme } from '@chakra-ui/react'
 import { mode } from '@chakra-ui/theme-tools'
-import '@fontsource-variable/onest'
 import { DARK_MODE, LIGHT_MODE } from './combinedColors'
 
 const config = {
