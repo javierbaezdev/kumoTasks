@@ -9,7 +9,7 @@ const scrollbarStyles = (props: SystemStyleObject) => ({
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: mode(
-      LIGHT_MODE.primary[950],
+      LIGHT_MODE.primary[300],
       DARK_MODE.primary[100]
     )(props),
     borderRadius: '9px',
@@ -29,7 +29,7 @@ const styles: Styles = {
     'html, body': {
       backgroundColor: mode(
         LIGHT_MODE.primary[100],
-        DARK_MODE.primary[950]
+        DARK_MODE.primary[300]
       )(props),
       height: '100vh',
       width: '100vw',
