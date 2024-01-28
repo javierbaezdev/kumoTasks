@@ -31,25 +31,20 @@ const styles: Styles = {
         LIGHT_MODE.primary[100],
         DARK_MODE.primary[950]
       )(props),
-      height: '100%',
-      width: '100%',
+      height: '100vh',
+      width: '100vw',
       padding: 0,
       margin: 0,
     },
     '#root': {
-      height: '100%',
-      width: '100%',
+      height: '100vh',
+      width: '100vw',
     },
     ...scrollbarStyles(props),
   }),
 }
 
 const fonts = {
-  body: "'Onest Variable', sans-serif",
-  heading: "'Onest Variable', sans-serif",
-}
-
-const colors = {
   body: "'Onest Variable', sans-serif",
   heading: "'Onest Variable', sans-serif",
 }
@@ -62,7 +57,6 @@ const config: ThemeConfig = {
 const defaultTheme = {
   styles,
   fonts,
-  colors,
   config,
 }
 
