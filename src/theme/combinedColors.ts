@@ -1,19 +1,25 @@
 import { darkMode } from './darkMode'
 import { lightMode } from './lightMode'
+import { ColorShadesCompleted, ColorsShadesMode } from './types'
 
-const generalColors = {
-  cornflowerBlue: {
-    '50': '#ecf4ff',
-    '100': '#ddeaff',
-    '200': '#c2d8ff',
-    '300': '#9cbdff',
-    '400': '#7597ff',
-    '500': '#6680ff',
-    '600': '#3647f5',
-    '700': '#2a37d8',
-    '800': '#2531ae',
-    '900': '#263289',
-    '950': '#161b50',
+export interface GeneralColors {
+  mediumPurple: ColorShadesCompleted
+  javaScript: ColorShadesCompleted
+}
+
+export const generalColors: GeneralColors = {
+  mediumPurple: {
+    '50': '#c9c6f5',
+    '100': '#c0baf3',
+    '200': '#b0a5ee',
+    '300': '#998ae5',
+    '400': '#896cda',
+    '500': '#7b54cf',
+    '600': '#7340ba',
+    '700': '#64458c',
+    '800': '#4a3768',
+    '900': '#3a2e4d',
+    '950': '#34214f',
   },
   javaScript: {
     '50': '#fcfcea',
@@ -30,7 +36,7 @@ const generalColors = {
   },
 }
 
-export const DARK_MODE = {
+export const DARK_MODE: GeneralColors & ColorsShadesMode = {
   ...generalColors,
   ...darkMode,
 }

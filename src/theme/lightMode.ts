@@ -1,12 +1,14 @@
-export const lightMode = {
+import { ColorsShadesMode } from './types'
+
+export const lightMode: ColorsShadesMode = {
   primary: {
-    '100': '#f5f6fb',
+    '100': '#d1d6ec',
     '200': '#e5e7f4',
-    '300': '#d1d6ec',
+    '300': '#f5f6fb',
   },
   secondary: {
-    '100': '#ffffff',
+    '100': '#dcdcdc',
     '200': '#efefef',
-    '300': '#dcdcdc',
+    '300': '#ffffff',
   },
 }

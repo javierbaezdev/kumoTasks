@@ -1,7 +1,12 @@
 import '@fontsource-variable/onest'
 import { ThemeConfig, extendTheme } from '@chakra-ui/react'
 import { Styles, SystemStyleObject, mode } from '@chakra-ui/theme-tools'
-import { DARK_MODE, LIGHT_MODE } from './combinedColors'
+import {
+  DARK_MODE,
+  GeneralColors,
+  LIGHT_MODE,
+  generalColors,
+} from './combinedColors'
 
 const scrollbarStyles = (props: SystemStyleObject) => ({
   '&::-webkit-scrollbar': {
@@ -9,8 +14,8 @@ const scrollbarStyles = (props: SystemStyleObject) => ({
   },
   '&::-webkit-scrollbar-thumb': {
     backgroundColor: mode(
-      LIGHT_MODE.primary[300],
-      DARK_MODE.primary[100]
+      LIGHT_MODE.primary[200],
+      DARK_MODE.primary[300]
     )(props),
     borderRadius: '9px',
     border: '4px solid transparent',
@@ -28,7 +33,7 @@ const styles: Styles = {
   global: (props) => ({
     'html, body': {
       backgroundColor: mode(
-        LIGHT_MODE.primary[100],
+        LIGHT_MODE.primary[200],
         DARK_MODE.primary[300]
       )(props),
       height: '100vh',
@@ -54,9 +59,12 @@ const config: ThemeConfig = {
   useSystemColorMode: false,
 }
 
+const colors = generalColors
+
 const defaultTheme = {
   styles,
   fonts,
+  colors,
   config,
 }
 

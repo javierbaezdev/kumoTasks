@@ -1,4 +1,5 @@
-import { DARK_MODE, LIGHT_MODE } from '@/theme/combinedColors'
+import { DARK_MODE, GeneralColors, LIGHT_MODE } from '@/theme/combinedColors'
+import { ColorsShadesMode } from '@/theme/types'
 import { useColorMode } from '@chakra-ui/react'
 
 const colorsModeDict: Record<string, any> = {
@@ -8,7 +9,7 @@ const colorsModeDict: Record<string, any> = {
 
 export const GET_COLORS_THEME = () => {
   const { colorMode, toggleColorMode } = useColorMode()
-  const colors = colorsModeDict[colorMode]
+  const colors: GeneralColors & ColorsShadesMode = colorsModeDict[colorMode]
 
   return { colorMode, toggleColorMode, colors }
 }

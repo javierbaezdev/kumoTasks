@@ -1,4 +1,6 @@
-export const darkMode = {
+import { ColorsShadesMode } from './types'
+
+export const darkMode: ColorsShadesMode = {
   primary: {
     '100': '#cad2ed',
     '200': '#324a97',
