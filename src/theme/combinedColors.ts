@@ -1,6 +1,6 @@
 import { darkMode } from './darkMode'
 import { lightMode } from './lightMode'
-import { ColorShadesCompleted, ColorsShadesMode } from './types'
+import { ColorShadesCompleted } from './types'
 
 export interface GeneralColors {
   mediumPurple: ColorShadesCompleted
@@ -36,12 +36,12 @@ export const generalColors: GeneralColors = {
   },
 }
 
-export const DARK_MODE: GeneralColors & ColorsShadesMode = {
+export const COMBINED_COLORS = {
   ...generalColors,
-  ...darkMode,
-}
-
-export const LIGHT_MODE = {
-  ...generalColors,
-  ...lightMode,
+  light: {
+    ...lightMode,
+  },
+  dark: {
+    ...darkMode,
+  },
 }

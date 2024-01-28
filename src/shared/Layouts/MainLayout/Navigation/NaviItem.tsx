@@ -1,4 +1,3 @@
-import { GET_COLORS_THEME } from '@/shared/constant'
 import { ItemNav } from './TabsList'
 import { Flex, Link as LinkChakra, ListIcon, Text } from '@chakra-ui/react'
 import { useMainLayoutStore } from '../store'
@@ -9,7 +8,6 @@ interface props {
 
 const NaviItem = ({ item, isActive }: props) => {
   const collapse = useMainLayoutStore((store) => store.collapse)
-  const { colors } = GET_COLORS_THEME()
   const { label, type, icon, path } = item
 
   return (
@@ -30,7 +28,7 @@ const NaviItem = ({ item, isActive }: props) => {
             opacity={isActive ? 1 : 0.8}
             _hover={{
               textDecoration: 'none',
-              color: colors.mediumPurple[300],
+              color: 'mediumPurple.300',
             }}
             gap={2}
           >

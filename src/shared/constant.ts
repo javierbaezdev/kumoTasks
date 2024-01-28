@@ -1,15 +1,13 @@
-import { DARK_MODE, GeneralColors, LIGHT_MODE } from '@/theme/combinedColors'
-import { ColorsShadesMode } from '@/theme/types'
 import { useColorMode } from '@chakra-ui/react'
-
-const colorsModeDict: Record<string, any> = {
-  light: LIGHT_MODE,
-  dark: DARK_MODE,
-}
+import { useMediaQuery } from 'react-responsive'
 
 export const GET_COLORS_THEME = () => {
   const { colorMode, toggleColorMode } = useColorMode()
-  const colors: GeneralColors & ColorsShadesMode = colorsModeDict[colorMode]
+  return { colorMode, toggleColorMode }
+}
 
-  return { colorMode, toggleColorMode, colors }
+export const GET_IS_SMALL_SCREAM = () => {
+  return useMediaQuery({
+    query: '(max-width: 600px)',
+  })
 }
