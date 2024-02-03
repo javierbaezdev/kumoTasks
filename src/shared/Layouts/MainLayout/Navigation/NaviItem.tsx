@@ -1,13 +1,24 @@
 import { ItemNav } from './TabsList'
-import { Flex, Link as LinkChakra, ListIcon, Text } from '@chakra-ui/react'
+import {
+  Flex,
+  Link as LinkChakra,
+  ListIcon,
+  Text,
+  useColorModeValue,
+} from '@chakra-ui/react'
 import { useMainLayoutStore } from '../store'
+import { useLocation } from 'react-router-dom'
+import { GRADIENTS_BG } from '@/shared/constant'
+
 interface props {
   item: ItemNav
   isActive: boolean
 }
 
 const NaviItem = ({ item, isActive }: props) => {
+  const location = useLocation()
   const collapse = useMainLayoutStore((store) => store.collapse)
+  const bgLink = useColorModeValue(GRADIENTS_BG.LIGHT, GRADIENTS_BG.DARK)
   const { label, type, icon, path } = item
 
   return (
@@ -17,6 +28,9 @@ const NaviItem = ({ item, isActive }: props) => {
           align='center'
           justify='center'
           my={4}
+          bg={location.pathname === path ? bgLink : undefined}
+          p={2}
+          borderRadius={8}
         >
           <LinkChakra
             href={path}

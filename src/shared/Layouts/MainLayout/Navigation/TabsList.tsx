@@ -1,4 +1,4 @@
-import { BoardsIcon } from '@/shared/Icons'
+import { BoxMultiple } from '@/shared/Icons'
 
 export interface ItemNav {
   type: string
@@ -10,9 +10,9 @@ export interface ItemNav {
 const itemsNavigation: ItemNav[] = [
   {
     type: 'LINK',
-    label: 'Tableros',
-    icon: <BoardsIcon />,
-    path: `/`,
+    label: 'Proyectos',
+    icon: <BoxMultiple />,
+    path: `/projects`,
   },
 ]
 

@@ -56,7 +56,15 @@ const MainLayout = ({ children }: Props) => {
         overflow='hidden'
       >
         <Header />
-        {children}
+        <Flex
+          w='full'
+          h='full'
+          m={0}
+          py={2}
+          px={4}
+        >
+          {children}
+        </Flex>
       </Flex>
     </HStack>
   )

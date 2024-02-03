@@ -1,10 +1,18 @@
-import { MainLayout } from '@/shared/Layouts'
+import { ChakraProvider } from '@chakra-ui/react'
+import customTheme from './theme'
+import { Suspense } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import RenderRoutes from './routes/renderRoutes'
 
 function App() {
   return (
-    <MainLayout>
-      <>Main</>
-    </MainLayout>
+    <ChakraProvider theme={customTheme}>
+      <Suspense fallback={<>loading....</>}>
+        <Router>
+          <RenderRoutes />
+        </Router>
+      </Suspense>
+    </ChakraProvider>
   )
 }
 
