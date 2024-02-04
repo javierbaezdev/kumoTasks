@@ -5,6 +5,15 @@ export const NO_DATA = {
   description: 'Sin descripción 🤐',
 }
 
+export const SCHEMA_MESSAGES = {
+  required: 'El campo es requerido',
+  minNum: 'El valor debe ser mayor o igual a: ',
+  maxNum: 'El valor debe ser menor o igual a: ',
+  isNumber: 'El valor ingresado debe ser un número',
+  email: 'Ingrese una dirección de correo electrónico válida',
+  atLeastOne: 'Se requiere al menos un elemento en la lista',
+}
+
 export const GRADIENTS_BG = {
   DARK: 'linear-gradient(270deg, rgba(27,29,42,0.4761554279915091) 0%, rgba(12,15,29,1) 100%)',
   LIGHT:

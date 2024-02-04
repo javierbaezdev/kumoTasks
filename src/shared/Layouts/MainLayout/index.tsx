@@ -2,7 +2,7 @@ import { Flex, HStack, useColorModeValue } from '@chakra-ui/react'
 import SideBar from './SideBar'
 import { useMainLayoutStore } from './store'
 import Header from './Header'
-import { GET_IS_SMALL_SCREAM } from '@/shared/constant'
+import { GET_IS_SMALL_SCREAM } from '@/shared/constants'
 import { SimpleDrawer } from '@/shared/components/modals'
 
 interface Props {

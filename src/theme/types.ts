@@ -18,4 +18,5 @@ export interface ColorShadesCompleted extends ColorShadesBase {
 export interface ColorsShadesMode {
   primary: ColorShadesBase
   secondary: ColorShadesBase
+  primaryFull: ColorShadesCompleted
 }

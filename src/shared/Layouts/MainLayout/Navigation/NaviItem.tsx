@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import { useMainLayoutStore } from '../store'
 import { useLocation } from 'react-router-dom'
-import { GRADIENTS_BG } from '@/shared/constant'
+import { GRADIENTS_BG } from '@/shared/constants'
 
 interface props {
   item: ItemNav

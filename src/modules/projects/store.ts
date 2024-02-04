@@ -1,17 +1,12 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { project, StateTypes } from '@/modules/projects/types'
-import { useId } from 'react'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
 
 interface State {
   projects: project[]
-  addProject: () => void
-  updateProject: (
-    fieldName: string,
-    currentKey: string,
-    newValue?: string | StateTypes
-  ) => void
+  addProject: (project: project) => void
+  updateProject: (project: project) => void
   deleteProject: (currentKey: string) => void
 }
 
@@ -21,34 +16,22 @@ export const useProjectsStore = create<State>()(
       (set, get) => {
         return {
           projects: [],
-          addProject: () => {
-            const key = useId()
+          addProject: (project) => {
             const { projects } = get()
-
-            const newItem: project = {
-              key,
-              name: 'Nuevo proyecto',
-              description: undefined,
-              state: 'ACTIVE',
-            }
-
             set({
-              projects: [...projects, newItem],
+              projects: [...projects, project],
             })
           },
-          updateProject: (fieldName, currentKey, newValue) => {
+          updateProject: (project) => {
             const { projects } = get()
             const projectsCopy: project[] = cloneDeep(projects)
 
             const indexCurrentProject = projectsCopy.findIndex(
-              (item) => item.key === currentKey
+              (item) => item.key === project.key
             )
 
             if (indexCurrentProject > -1) {
-              projectsCopy[indexCurrentProject] = {
-                ...projectsCopy[indexCurrentProject],
-                [fieldName]: newValue,
-              }
+              projectsCopy[indexCurrentProject] = project
 
               set({
                 projects: projectsCopy,

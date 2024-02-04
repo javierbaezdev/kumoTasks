@@ -7,7 +7,7 @@ import {
   MoonStars,
   SunHigh,
 } from '@/shared/Icons'
-import { GET_COLORS_THEME, GET_IS_SMALL_SCREAM } from '@/shared/constant'
+import { GET_COLORS_THEME, GET_IS_SMALL_SCREAM } from '@/shared/constants'
 
 const Header = () => {
   const { collapse, onToggle, onToggleMobile } = useMainLayoutStore(

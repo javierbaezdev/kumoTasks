@@ -3,7 +3,7 @@ import LOGO_MIN_DARK from '@/assets/logo/min_logo_v2.svg'
 import LOGO_FULL_LIGHT from '@/assets/logo/full_logo.svg'
 import LOGO_MIN_LIGHT from '@/assets/logo/min_logo.svg'
 import { Box, Flex, Image } from '@chakra-ui/react'
-import { GET_COLORS_THEME } from '@/shared/constant'
+import { GET_COLORS_THEME } from '@/shared/constants'
 import { useMainLayoutStore } from './store'
 const Logo = () => {
   const { colorMode } = GET_COLORS_THEME()
