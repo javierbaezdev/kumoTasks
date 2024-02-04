@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
-import { project, StateTypes } from '@/modules/projects/types'
+import { project } from '@/modules/projects/types'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
 
 interface State {
