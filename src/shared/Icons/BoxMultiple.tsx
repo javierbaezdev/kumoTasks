@@ -7,8 +7,8 @@ const BoxMultiple = () => {
       stroke-width='2'
       stroke='currentColor'
       fill='none'
-      stroke-linecap='round'
-      stroke-linejoin='round'
+      strokeLinecap='round'
+      strokeLinejoin='round'
     >
       <path
         stroke='none'

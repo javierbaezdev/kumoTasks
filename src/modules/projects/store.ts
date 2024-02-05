@@ -2,10 +2,11 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { project } from '@/modules/projects/types'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
-import { toast } from 'sonner'
+import { showToast } from '@/shared/utils/sonnerToast'
 
 interface State {
   projects: project[]
+  limit: number
   addProject: (project: project) => void
   updateProject: (project: project) => void
   deleteProject: (currentKey: string) => void
@@ -17,12 +18,25 @@ export const useProjectsStore = create<State>()(
       (set, get) => {
         return {
           projects: [],
+          limit: 10,
           addProject: (project) => {
-            const { projects } = get()
+            const { projects, limit } = get()
+
+            if (projects.length === limit) {
+              showToast({
+                msg: `Solo es posible crear hasta ${limit} proyectos 😖`,
+                type: 'warning',
+              })
+              return
+            }
+
             set({
               projects: [...projects, project],
             })
-            toast.success('Proyecto agregado exitosamente 🎉')
+            showToast({
+              msg: 'Proyecto agregado exitosamente 🎉',
+              type: 'success',
+            })
           },
           updateProject: (project) => {
             const { projects } = get()
@@ -38,7 +52,10 @@ export const useProjectsStore = create<State>()(
               set({
                 projects: projectsCopy,
               })
-              toast.success('Proyecto actualizado exitosamente 🎉')
+              showToast({
+                msg: 'Proyecto actualizado exitosamente 🎉',
+                type: 'success',
+              })
             }
           },
           deleteProject: (currentKey) => {
@@ -50,7 +67,10 @@ export const useProjectsStore = create<State>()(
             set({
               projects: newProjects,
             })
-            toast.success('Proyecto eliminado exitosamente 🎉')
+            showToast({
+              msg: 'Proyecto eliminado exitosamente 🎉',
+              type: 'success',
+            })
           },
         }
       },

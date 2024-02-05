@@ -1,7 +1,7 @@
 import { project } from '@/modules/projects/types'
 import { CirclePlus, EditCircle, Trash } from '@/shared/Icons'
 import { SimpleIconButton } from '@/shared/components/buttons'
-import { SimpleModal } from '@/shared/components/modals'
+import { ConfirmModal, SimpleModal } from '@/shared/components/modals'
 import { GRADIENTS_BG, NO_DATA } from '@/shared/constants'
 import {
   Badge,
@@ -40,6 +40,7 @@ const ProjectCard = ({ project, isNew }: props) => {
 
   const [isCreate, setIsCreate] = useState<boolean>(true)
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
 
   const handleOpenModal = ({ isCreateForm }: { isCreateForm: boolean }) => {
     setIsCreate(isCreateForm)
@@ -104,7 +105,7 @@ const ProjectCard = ({ project, isNew }: props) => {
                 <SimpleIconButton
                   icon={<Trash />}
                   aria-label='delete'
-                  onClick={() => deleteProject(project.key)}
+                  onClick={() => onToggleDelete()}
                   bg='transparent'
                   _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
                   size='xs'
@@ -148,6 +149,15 @@ const ProjectCard = ({ project, isNew }: props) => {
             onClose={onClose}
           />
         </SimpleModal>
+      )}
+      {isOpenDelete && project && (
+        <ConfirmModal
+          isOpen={isOpenDelete}
+          onClose={onToggleDelete}
+          modalHeader='Eliminar Proyecto'
+          modalDescription={`Estas seguro de eliminar el proyecto llamado "${project.name}"? 😯`}
+          onClickConfirm={() => deleteProject(project.key)}
+        />
       )}
     </>
   )

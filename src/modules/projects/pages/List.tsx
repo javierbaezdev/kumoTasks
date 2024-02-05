@@ -8,9 +8,7 @@ const List = () => {
   const isSmallScream = GET_IS_SMALL_SCREAM()
   return (
     <Grid
-      templateColumns={`repeat(auto-fit, minmax(${
-        isSmallScream ? '1fr' : '380px'
-      }, 380px))`}
+      templateColumns='repeat(auto-fill, minmax(min(100%, 25rem), 1fr))'
       gridTemplateRows={`repeat(auto-fill, ${MIN_H + 10}px)`}
       gap={2}
       w='full'
