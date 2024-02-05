@@ -31,7 +31,7 @@ interface props {
   isNew?: boolean
 }
 
-const MIN_H = 140
+export const MIN_H = 140
 
 const ProjectCard = ({ project, isNew }: props) => {
   const deleteProject = useProjectsStore((store) => store.deleteProject)

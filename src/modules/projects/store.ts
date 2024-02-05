@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { devtools, persist } from 'zustand/middleware'
 import { project } from '@/modules/projects/types'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
+import { toast } from 'sonner'
 
 interface State {
   projects: project[]
@@ -21,6 +22,7 @@ export const useProjectsStore = create<State>()(
             set({
               projects: [...projects, project],
             })
+            toast.success('Proyecto agregado exitosamente 🎉')
           },
           updateProject: (project) => {
             const { projects } = get()
@@ -36,6 +38,7 @@ export const useProjectsStore = create<State>()(
               set({
                 projects: projectsCopy,
               })
+              toast.success('Proyecto actualizado exitosamente 🎉')
             }
           },
           deleteProject: (currentKey) => {
@@ -47,6 +50,7 @@ export const useProjectsStore = create<State>()(
             set({
               projects: newProjects,
             })
+            toast.success('Proyecto eliminado exitosamente 🎉')
           },
         }
       },

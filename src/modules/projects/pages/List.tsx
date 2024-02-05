@@ -1,25 +1,37 @@
 import { useProjectsStore } from '@/modules/projects/store'
 import { Grid, GridItem } from '@chakra-ui/react'
-import ProjectCard from '@/modules/projects/components/ProjectCard'
+import ProjectCard, { MIN_H } from '@/modules/projects/components/ProjectCard'
+import { GET_IS_SMALL_SCREAM } from '@/shared/constants'
 
 const List = () => {
   const projects = useProjectsStore((store) => store.projects)
-
+  const isSmallScream = GET_IS_SMALL_SCREAM()
   return (
     <Grid
-      templateColumns='repeat(auto-fit, minmax(380px, 1fr))'
+      templateColumns={`repeat(auto-fit, minmax(${
+        isSmallScream ? '1fr' : '380px'
+      }, 380px))`}
+      gridTemplateRows={`repeat(auto-fill, ${MIN_H + 10}px)`}
       gap={2}
       w='full'
       overflow='auto'
+      sx={{
+        '&::-webkit-scrollbar': {
+          display: isSmallScream ? 'none' : 'block',
+        },
+        msOverflowStyle: isSmallScream ? 'none' : 'block',
+        scrollbarWidth: isSmallScream ? 'none' : 'block',
+      }}
+      pb={20}
     >
-      {projects?.map((project) => (
-        <GridItem>
-          <ProjectCard project={project} />
-        </GridItem>
-      ))}
       <GridItem>
         <ProjectCard isNew={true} />
       </GridItem>
+      {projects?.map((project) => (
+        <GridItem key={project.key}>
+          <ProjectCard project={project} />
+        </GridItem>
+      ))}
     </Grid>
   )
 }

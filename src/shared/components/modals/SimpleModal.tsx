@@ -19,7 +19,7 @@ const SimpleModal = ({ children, modalHeader, ...props }: Props) => {
   return (
     <Modal
       isCentered
-      motionPreset='slideInRight'
+      motionPreset='slideInBottom'
       size='lg'
       {...props}
     >

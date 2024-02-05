@@ -21,8 +21,6 @@ const Form = ({ project, isCreate, onClose }: Props) => {
     initialValues:
       !isCreate && project ? project : { ...initialValues, key: generateId() },
     validationSchema: schema,
-    validateOnMount: false,
-    validateOnChange: true,
     onSubmit: async (values) => {
       if (isCreate) {
         addProject(values)
@@ -73,6 +71,7 @@ const Form = ({ project, isCreate, onClose }: Props) => {
           <SimpleButton
             leftIcon={<DeviceFloppy />}
             onClick={() => formik.handleSubmit()}
+            isDisabled={!formik.isValid}
           >
             {isCreate ? 'Guardar' : 'Actualizar'}
           </SimpleButton>
