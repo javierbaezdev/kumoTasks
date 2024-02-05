@@ -3,7 +3,7 @@ const CircleArrowRight = () => (
     width='24'
     height='24'
     viewBox='0 0 24 24'
-    stroke-width='2'
+    strokeWidth='2'
     stroke='currentColor'
     fill='none'
     strokeLinecap='round'

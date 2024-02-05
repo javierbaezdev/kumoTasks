@@ -1,4 +1,4 @@
-const BoardsIcon = () => {
+const ExternalLink = () => {
   return (
     <svg
       width='24'
@@ -15,12 +15,11 @@ const BoardsIcon = () => {
         d='M0 0h24v24H0z'
         fill='none'
       />
-      <path d='M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z' />
-      <path d='M4 9h8' />
-      <path d='M12 15h8' />
-      <path d='M12 4v16' />
+      <path d='M12 6h-6a2 2 0 0 0 -2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-6' />
+      <path d='M11 13l9 -9' />
+      <path d='M15 4h5v5' />
     </svg>
   )
 }
 
-export default BoardsIcon
+export default ExternalLink

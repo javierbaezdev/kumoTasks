@@ -30,3 +30,15 @@ export const GET_IS_SMALL_SCREAM = () => {
     query: '(max-width: 600px)',
   })
 }
+
+export const GET_STYLES_SCROLL = () => {
+  const isSmallScream = GET_IS_SMALL_SCREAM()
+
+  return {
+    '&::-webkit-scrollbar': {
+      display: isSmallScream ? 'none' : 'block',
+    },
+    msOverflowStyle: isSmallScream ? 'none' : 'block',
+    scrollbarWidth: isSmallScream ? 'none' : 'block',
+  }
+}
