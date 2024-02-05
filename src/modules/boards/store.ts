@@ -3,6 +3,7 @@ import { devtools, persist } from 'zustand/middleware'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
 import { showToast } from '@/shared/utils/sonnerToast'
 import { ColumnsBoard } from '@/modules/boards/types'
+import { arrayMove } from '@dnd-kit/sortable'
 
 interface State {
   columnsBoard: ColumnsBoard[]
@@ -10,6 +11,10 @@ interface State {
   addColumn: (column: ColumnsBoard) => void
   updateColumn: (column: ColumnsBoard) => void
   deleteColumn: (column: string) => void
+  sortColumns: (
+    activeColumnKey: string | number,
+    overColumnKey: string | number
+  ) => void
 }
 
 export const useBoardsStore = create<State>()(
@@ -70,6 +75,25 @@ export const useBoardsStore = create<State>()(
             showToast({
               msg: 'Columna eliminada exitosamente 🎉',
               type: 'success',
+            })
+          },
+          sortColumns: (activeColumnKey, overColumnKey) => {
+            const { columnsBoard } = get()
+
+            const activeColumnIndex = columnsBoard.findIndex(
+              (col) => col.key === activeColumnKey
+            )
+            const overColumnIndex = columnsBoard.findIndex(
+              (col) => col.key === overColumnKey
+            )
+
+            const newColumns = arrayMove(
+              columnsBoard,
+              activeColumnIndex,
+              overColumnIndex
+            )
+            set({
+              columnsBoard: newColumns,
             })
           },
         }

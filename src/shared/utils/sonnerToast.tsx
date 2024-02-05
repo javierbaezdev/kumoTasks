@@ -7,6 +7,7 @@ const getBasicStyles = (colorMode: string | null) => {
     color: '#ffffff',
     fontSize: '0.9rem',
     border: 'none',
+    justifyContent: 'center',
   }
 
   if (colorMode === 'light') {

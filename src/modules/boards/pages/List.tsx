@@ -1,12 +1,10 @@
 import { Flex, Grid, GridItem } from '@chakra-ui/react'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
-import { useBoardsStore } from '../store'
-import ColumnContainer from '@/modules/boards/components/ColumnContainer'
 import { useRef, WheelEvent } from 'react'
+import NewColumnButton from '../components/NewColumnButton'
+import ColumnsContainer from '../components/ColumnsContainer'
 
 const List = () => {
-  const columnsBoard = useBoardsStore((store) => store.columnsBoard)
-
   const containerRef = useRef<HTMLDivElement>(null)
 
   const handleWheelScroll = (e: WheelEvent<HTMLDivElement>) => {
@@ -32,13 +30,8 @@ const List = () => {
           w='full'
           h='full'
         >
-          <ColumnContainer isNew={true} />
-          {columnsBoard.map((column) => (
-            <ColumnContainer
-              key={column.key}
-              column={column}
-            />
-          ))}
+          <NewColumnButton />
+          <ColumnsContainer />
         </Flex>
       </GridItem>
     </Grid>
