@@ -1,8 +1,12 @@
 import { lazy } from 'react'
 import { PATHS } from './paths'
 import { MainLayout } from '@/shared/Layouts'
+import { FAKE_DELAY_ROUTER } from '@/shared/constants'
 
-const List = lazy(async () => await import('./pages/List'))
+const List = lazy(async () => {
+  await new Promise((resolve) => setTimeout(resolve, FAKE_DELAY_ROUTER))
+  return import('./pages/List')
+})
 
 const clientRoutes = [
   {

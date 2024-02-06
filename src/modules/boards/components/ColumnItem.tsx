@@ -23,7 +23,7 @@ const ColumnItem = ({ column }: props) => {
     'dark.primaryFull.300'
   )
   const bgCardContent = useColorModeValue(
-    'light.secondary.200',
+    'light.secondary.300',
     'dark.secondary.300'
   )
   const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()

@@ -1,6 +1,8 @@
 import { useColorMode } from '@chakra-ui/react'
 import { useMediaQuery } from 'react-responsive'
 
+export const FAKE_DELAY_ROUTER = 600
+
 export const NO_DATA = {
   description: 'Sin descripción 🤐',
 }

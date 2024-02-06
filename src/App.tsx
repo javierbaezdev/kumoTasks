@@ -4,11 +4,12 @@ import { Suspense } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import RenderRoutes from './routes/renderRoutes'
 import { Toaster } from 'sonner'
+import { FullScreen } from './shared/components/loaders'
 
 function App() {
   return (
     <ChakraProvider theme={customTheme}>
-      <Suspense fallback={<>loading....</>}>
+      <Suspense fallback={<FullScreen />}>
         <Toaster
           visibleToasts={5}
           position='top-center'
