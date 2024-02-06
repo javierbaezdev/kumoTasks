@@ -12,6 +12,7 @@ const TasksList = ({ columnKey }: Props) => {
     <Flex
       w='full'
       gap={2}
+      direction='column'
     >
       {tasksBoard
         .filter((taks) => taks.columnKey === columnKey)
