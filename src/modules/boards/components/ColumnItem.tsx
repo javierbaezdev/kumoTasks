@@ -1,22 +1,29 @@
-import { Trash } from '@/shared/Icons'
-import { SimpleIconButton } from '@/shared/components/buttons'
-import { ConfirmModal } from '@/shared/components/modals'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
-import { Flex, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react'
-import { useBoardsStore } from '../store'
+import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { ColumnsBoard } from '@/modules/boards/types'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
+import { useState } from 'react'
+import ColumnFooter from './ColumnFooter'
+import ColumnContent from './ColumnContent'
+import ColumnHeader from './ColumnHeader'
 
 interface props {
   column: ColumnsBoard
+}
+
+export interface EditMode {
+  name: boolean
 }
 
 export const MIN_H = 50
 export const MIN_W = 300
 
 const ColumnItem = ({ column }: props) => {
-  const deleteColumn = useBoardsStore((store) => store.deleteColumn)
+  const [editMode, setEditMode] = useState<EditMode>({
+    name: false,
+  })
+
   const bgCard = useColorModeValue('light.primary.100', 'dark.primary.300')
   const borderColor = useColorModeValue(
     'light.primaryFull.950',
@@ -26,7 +33,7 @@ const ColumnItem = ({ column }: props) => {
     'light.secondary.300',
     'dark.secondary.300'
   )
-  const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
+
   const {
     setNodeRef,
     attributes,
@@ -40,6 +47,7 @@ const ColumnItem = ({ column }: props) => {
       type: 'COLUMN',
       column,
     },
+    disabled: editMode.name,
   })
 
   const stylesDnd = {
@@ -58,6 +66,7 @@ const ColumnItem = ({ column }: props) => {
         direction='column'
         gap={2}
         minW={MIN_W}
+        maxW={MIN_W}
         minH={MIN_H}
         justify='space-between'
         opacity={isDragging ? 0.2 : 1}
@@ -78,28 +87,11 @@ const ColumnItem = ({ column }: props) => {
             borderRadius={8}
             p={2}
           >
-            <Flex
-              justify='space-between'
-              align='center'
-            >
-              <Text
-                as='b'
-                noOfLines={[1]}
-              >
-                {column.name}
-              </Text>
-
-              <Flex gap={2}>
-                <SimpleIconButton
-                  icon={<Trash />}
-                  aria-label='delete'
-                  onClick={() => onToggleDelete()}
-                  bg='transparent'
-                  _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
-                  size='xs'
-                />
-              </Flex>
-            </Flex>
+            <ColumnHeader
+              column={column}
+              editMode={editMode}
+              onChangeEditMode={(newEditMode) => setEditMode(newEditMode)}
+            />
           </Flex>
 
           <Flex
@@ -109,27 +101,19 @@ const ColumnItem = ({ column }: props) => {
             p={2}
             sx={GET_STYLES_SCROLL()}
           >
-            contents
+            <ColumnContent column={column} />
           </Flex>
 
           <Flex
-            p={2}
+            p={1}
             bg={bgCardContent}
             borderRadius={8}
+            justify='center'
           >
-            Total de tareas: {0}
+            <ColumnFooter column={column} />
           </Flex>
         </Flex>
       </Flex>
-      {isOpenDelete && column && (
-        <ConfirmModal
-          isOpen={isOpenDelete}
-          onClose={onToggleDelete}
-          modalHeader='Eliminar Columna'
-          modalDescription={`Estas seguro de eliminar la columna llamada "${column.name}"? 😯`}
-          onClickConfirm={() => deleteColumn(column.key)}
-        />
-      )}
     </>
   )
 }

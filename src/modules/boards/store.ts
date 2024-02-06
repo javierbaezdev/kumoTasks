@@ -57,10 +57,6 @@ export const useBoardsStore = create<State>()(
               set({
                 columnsBoard: columnsCopy,
               })
-              showToast({
-                msg: 'Columna actualizada exitosamente 🎉',
-                type: 'success',
-              })
             }
           },
           deleteColumn: (currentKey) => {

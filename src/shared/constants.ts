@@ -5,6 +5,7 @@ export const FAKE_DELAY_ROUTER = 600
 
 export const NO_DATA = {
   description: 'Sin descripción 🤐',
+  columnName: 'Sin nombre',
 }
 
 export const SCHEMA_MESSAGES = {
