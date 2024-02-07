@@ -3,6 +3,11 @@ import { useMediaQuery } from 'react-responsive'
 
 export const FAKE_DELAY_ROUTER = 600
 
+export const KEYS_DND = {
+  COLUMN: 'COLUMN',
+  TASK: 'TASK',
+}
+
 export const NO_DATA = {
   description: 'Sin descripción 🤐',
   columnName: 'Sin nombre',
@@ -18,9 +23,9 @@ export const SCHEMA_MESSAGES = {
 }
 
 export const GRADIENTS_BG = {
-  DARK: 'linear-gradient(270deg, rgba(27,29,42,0.4761554279915091) 0%, rgba(12,15,29,1) 100%)',
+  DARK: 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(12,15,29,1) 100%)',
   LIGHT:
-    'linear-gradient(270deg, rgba(255,255,255,0.5713935232296043) 0%, rgba(229,231,244,1) 100%)',
+    'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(229,231,244,1) 100%)',
 }
 
 export const GET_COLORS_THEME = () => {

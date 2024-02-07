@@ -3,16 +3,21 @@ import { devtools, persist } from 'zustand/middleware'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
 import { showToast } from '@/shared/utils/sonnerToast'
 import { TasksBoard } from '@/modules/tasks/types'
+import { arrayMove } from '@dnd-kit/sortable'
 
 interface State {
   tasksBoard: TasksBoard[]
   addTask: (task: TasksBoard) => void
   updateTask: (task: TasksBoard, showAlert: boolean) => void
   deleteTask: (task: string) => void
-  /* sortTask: (
-    activeColumnKey: string | number,
-    overColumnKey: string | number
-  ) => void */
+  sortTask: (
+    activeTaskKey: string | number,
+    overTaksKey: string | number
+  ) => void
+  moveTaskToOtherColumn: (
+    taskKey: string | number,
+    columnKey: string | number
+  ) => void
 }
 
 export const useTasksStore = create<State>()(
@@ -68,25 +73,57 @@ export const useTasksStore = create<State>()(
               type: 'success',
             })
           },
-          /* sortColumns: (activeColumnKey, overColumnKey) => {
-            const { columnsBoard } = get()
+          sortTask: (activeTaskKey, overTaskKey) => {
+            const { tasksBoard } = get()
+            const tasksCopy: TasksBoard[] = cloneDeep(tasksBoard)
+            let newTasks: TasksBoard[] = []
 
-            const activeColumnIndex = columnsBoard.findIndex(
-              (col) => col.key === activeColumnKey
+            const activeTaskIndex = tasksCopy.findIndex(
+              (task) => task.key === activeTaskKey
             )
-            const overColumnIndex = columnsBoard.findIndex(
-              (col) => col.key === overColumnKey
+            const overTaskIndex = tasksCopy.findIndex(
+              (task) => task.key === overTaskKey
             )
 
-            const newColumns = arrayMove(
-              columnsBoard,
-              activeColumnIndex,
-              overColumnIndex
-            )
+            if (
+              tasksCopy[activeTaskIndex].columnKey !=
+              tasksCopy[overTaskIndex].columnKey
+            ) {
+              tasksCopy[activeTaskIndex].columnKey =
+                tasksCopy[overTaskIndex].columnKey
+
+              newTasks = arrayMove(
+                tasksCopy,
+                activeTaskIndex,
+                overTaskIndex - 1
+              )
+            } else {
+              newTasks = arrayMove(tasksCopy, activeTaskIndex, overTaskIndex)
+            }
+
             set({
-              columnsBoard: newColumns,
+              tasksBoard: newTasks,
             })
-          }, */
+          },
+          moveTaskToOtherColumn: (taskKey, columnKey) => {
+            const { tasksBoard } = get()
+            const tasksCopy: TasksBoard[] = cloneDeep(tasksBoard)
+
+            const activeTaskIndex = tasksCopy.findIndex(
+              (task) => task.key === taskKey
+            )
+            tasksCopy[activeTaskIndex].columnKey = columnKey.toString()
+
+            const newTasks: TasksBoard[] = arrayMove(
+              tasksCopy,
+              activeTaskIndex,
+              activeTaskIndex
+            )
+
+            set({
+              tasksBoard: newTasks,
+            })
+          },
         }
       },
       {

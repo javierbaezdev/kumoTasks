@@ -3,6 +3,7 @@ import SideBar from './SideBar'
 import { useMainLayoutStore } from './store'
 import { GET_IS_SMALL_SCREAM } from '@/shared/constants'
 import { SimpleDrawer } from '@/shared/components/modals'
+import MobileButton from './MobileButton'
 
 interface Props {
   children: JSX.Element
@@ -56,7 +57,7 @@ const MainLayout = ({ children }: Props) => {
         borderRadius='3xl'
         overflow='hidden'
       >
-        {/* <Header /> */}
+        {isSmallScream && <MobileButton />}
         <Flex
           w='full'
           h='100%'

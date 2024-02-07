@@ -1,4 +1,8 @@
-import { GET_STYLES_SCROLL } from '@/shared/constants'
+import {
+  GET_IS_SMALL_SCREAM,
+  GET_STYLES_SCROLL,
+  KEYS_DND,
+} from '@/shared/constants'
 import { Flex, useColorModeValue } from '@chakra-ui/react'
 import { ColumnsBoard } from '@/modules/boards/types'
 import { useSortable } from '@dnd-kit/sortable'
@@ -20,6 +24,7 @@ export const MIN_H = 50
 export const MIN_W = 350
 
 const ColumnItem = ({ column }: props) => {
+  const isSmallScream = GET_IS_SMALL_SCREAM()
   const [editMode, setEditMode] = useState<EditMode>({
     name: false,
   })
@@ -44,10 +49,10 @@ const ColumnItem = ({ column }: props) => {
   } = useSortable({
     id: column.key,
     data: {
-      type: 'COLUMN',
+      type: KEYS_DND.COLUMN,
       column,
     },
-    disabled: editMode.name,
+    disabled: editMode.name || isSmallScream,
   })
 
   const stylesDnd = {

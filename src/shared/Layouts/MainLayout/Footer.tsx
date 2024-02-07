@@ -48,15 +48,17 @@ const Footer = () => {
           _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
         />
       </Box>
-      <Box>
-        <SimpleIconButton
-          icon={collapse ? <CircleArrowLeft /> : <CircleArrowRight />}
-          aria-label='onToggle'
-          onClick={() => onToggleOptions()}
-          bg='transparent'
-          _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
-        />
-      </Box>
+      {!isSmallScream && (
+        <Box>
+          <SimpleIconButton
+            icon={collapse ? <CircleArrowLeft /> : <CircleArrowRight />}
+            aria-label='onToggle'
+            onClick={() => onToggleOptions()}
+            bg='transparent'
+            _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
+          />
+        </Box>
+      )}
     </Flex>
   )
 }

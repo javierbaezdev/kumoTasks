@@ -7,6 +7,6 @@ export const schema = Yup.object().shape({
   projectKey: Yup.string().required(SCHEMA_MESSAGES.required),
   name: Yup.string()
     .required(SCHEMA_MESSAGES.required)
-    .max(100, SCHEMA_MESSAGES.maxNum + 100),
-  description: Yup.string().max(500, SCHEMA_MESSAGES.maxNum + 500),
+    .max(40, SCHEMA_MESSAGES.maxNum + 40),
+  description: Yup.string().max(300, SCHEMA_MESSAGES.maxNum + 300),
 })
