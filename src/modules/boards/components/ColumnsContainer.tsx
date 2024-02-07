@@ -56,7 +56,7 @@ const ColumnsContainer = () => {
       onDragEnd={onDragEnd}
     >
       <Flex
-        h='full'
+        h='100%'
         w='full'
         gap={2}
       >
@@ -73,7 +73,7 @@ const ColumnsContainer = () => {
         ))}
         <DragOverlay>
           {activeColumn && (
-            <Flex h='full'>
+            <Flex h='100%'>
               <ColumnItem column={activeColumn} />
             </Flex>
           )}

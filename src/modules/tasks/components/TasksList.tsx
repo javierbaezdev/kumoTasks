@@ -13,6 +13,7 @@ const TasksList = ({ columnKey }: Props) => {
       w='full'
       gap={2}
       direction='column'
+      overflow='auto'
     >
       {tasksBoard
         .filter((taks) => taks.columnKey === columnKey)

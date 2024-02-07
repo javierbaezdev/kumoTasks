@@ -1,7 +1,6 @@
 import { Flex, HStack, useColorModeValue } from '@chakra-ui/react'
 import SideBar from './SideBar'
 import { useMainLayoutStore } from './store'
-import Header from './Header'
 import { GET_IS_SMALL_SCREAM } from '@/shared/constants'
 import { SimpleDrawer } from '@/shared/components/modals'
 
@@ -15,6 +14,7 @@ const MainLayout = ({ children }: Props) => {
   const { collapse, collapseMobile, onToggleMobile } = useMainLayoutStore(
     (store) => store
   )
+
   return (
     <HStack
       w='full'
@@ -32,6 +32,7 @@ const MainLayout = ({ children }: Props) => {
           direction='column'
           justify='space-between'
           borderRadius='3xl'
+          position='relative'
         >
           <SideBar />
         </Flex>
@@ -48,17 +49,17 @@ const MainLayout = ({ children }: Props) => {
       <Flex
         as='main'
         w='full'
-        h='full'
+        h='100%'
         bg={bgAside}
         direction='column'
-        position='relative'
+        /* position='relative' */
         borderRadius='3xl'
         overflow='hidden'
       >
-        <Header />
+        {/* <Header /> */}
         <Flex
           w='full'
-          h='full'
+          h='100%'
           m={0}
           py={2}
           px={4}

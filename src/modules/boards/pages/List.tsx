@@ -1,4 +1,4 @@
-import { Flex, Grid, GridItem } from '@chakra-ui/react'
+import { Flex } from '@chakra-ui/react'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
 import { useRef, WheelEvent } from 'react'
 import NewColumnButton from '../components/NewColumnButton'
@@ -15,26 +15,18 @@ const List = () => {
   }
 
   return (
-    <Grid
-      templateColumns='repeat(1, 1fr)'
+    <Flex
       gap={2}
       w='full'
-      overflow='auto'
+      h='100%'
+      py={4}
       sx={GET_STYLES_SCROLL()}
       ref={containerRef}
       onWheel={handleWheelScroll}
     >
-      <GridItem>
-        <Flex
-          gap={2}
-          w='full'
-          h='full'
-        >
-          <NewColumnButton />
-          <ColumnsContainer />
-        </Flex>
-      </GridItem>
-    </Grid>
+      <NewColumnButton />
+      <ColumnsContainer />
+    </Flex>
   )
 }
 

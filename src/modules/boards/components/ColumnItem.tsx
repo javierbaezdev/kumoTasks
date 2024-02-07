@@ -17,7 +17,7 @@ export interface EditMode {
 }
 
 export const MIN_H = 50
-export const MIN_W = 300
+export const MIN_W = 350
 
 const ColumnItem = ({ column }: props) => {
   const [editMode, setEditMode] = useState<EditMode>({
@@ -78,7 +78,7 @@ const ColumnItem = ({ column }: props) => {
           {...listeners}
           gap={2}
           direction='column'
-          h='full'
+          h='100%'
         >
           <Flex
             direction='column'
@@ -96,10 +96,11 @@ const ColumnItem = ({ column }: props) => {
 
           <Flex
             bg={bgCardContent}
-            h='full'
+            h='100%'
             borderRadius={8}
             p={2}
             sx={GET_STYLES_SCROLL()}
+            overflow='auto'
           >
             <ColumnContent column={column} />
           </Flex>
