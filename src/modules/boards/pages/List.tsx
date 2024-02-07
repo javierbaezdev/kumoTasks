@@ -23,6 +23,7 @@ const List = () => {
       sx={GET_STYLES_SCROLL()}
       ref={containerRef}
       onWheel={handleWheelScroll}
+      overflowX='auto'
     >
       <NewColumnButton />
       <ColumnsContainer />
