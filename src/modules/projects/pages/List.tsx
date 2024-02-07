@@ -2,6 +2,7 @@ import { useProjectsStore } from '@/modules/projects/store'
 import { Grid, GridItem } from '@chakra-ui/react'
 import ProjectCard, { MIN_H } from '@/modules/projects/components/ProjectCard'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
+import { Message } from '@/shared/components'
 
 const List = () => {
   const projects = useProjectsStore((store) => store.projects)
@@ -23,6 +24,15 @@ const List = () => {
           <ProjectCard project={project} />
         </GridItem>
       ))}
+      {projects.length === 0 && (
+        <GridItem h={MIN_H}>
+          <Message
+            msg='Tu lista está vacía'
+            description='Actualmente no hay ningun proyecto agregado. Haz clic en "Agregar Nuevo proyecto" para comenzar.'
+            type='info'
+          />
+        </GridItem>
+      )}
     </Grid>
   )
 }

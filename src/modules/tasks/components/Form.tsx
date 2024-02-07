@@ -33,7 +33,7 @@ const Form = ({ task, columnKey, onClose }: Props) => {
         addTask(values)
       }
       if (task) {
-        updateTask(values, false)
+        updateTask(values)
       }
       onClose()
     },

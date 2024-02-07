@@ -7,6 +7,7 @@ import { SimpleIconButton } from '@/shared/components/buttons'
 import { Trash } from '@/shared/Icons'
 import { ConfirmModal } from '@/shared/components/modals'
 import { EditMode } from './ColumnItem'
+import { useTasksStore } from '@/modules/tasks/store'
 
 interface Props {
   column: ColumnsBoard
@@ -16,6 +17,7 @@ interface Props {
 
 const ColumnHeader = ({ column, editMode, onChangeEditMode }: Props) => {
   const { deleteColumn, updateColumn } = useBoardsStore((store) => store)
+  const deleteTask = useTasksStore((store) => store.deleteTask)
   const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
 
   const onChangeColumnName = (value: string = '') => {
@@ -77,7 +79,10 @@ const ColumnHeader = ({ column, editMode, onChangeEditMode }: Props) => {
           onClose={onToggleDelete}
           modalHeader='Eliminar Columna'
           modalDescription={`Estas seguro de eliminar la columna llamada "${column.name}"? 😯`}
-          onClickConfirm={() => deleteColumn(column.key)}
+          onClickConfirm={() => {
+            deleteColumn({ columnKey: column.key })
+            deleteTask({ columnKey: column.key })
+          }}
         />
       )}
     </>

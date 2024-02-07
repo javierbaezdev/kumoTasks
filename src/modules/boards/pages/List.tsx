@@ -1,12 +1,14 @@
 import { Flex } from '@chakra-ui/react'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
 import { useRef, WheelEvent } from 'react'
-import NewColumnButton from '../components/NewColumnButton'
+import NewColumnButton, { MIN_H } from '../components/NewColumnButton'
 import ColumnsContainer from '../components/ColumnsContainer'
+import { useBoardsStore } from '../store'
+import { Message } from '@/shared/components'
 
 const List = () => {
   const containerRef = useRef<HTMLDivElement>(null)
-
+  const columnsBoard = useBoardsStore((store) => store.columnsBoard)
   const handleWheelScroll = (e: WheelEvent<HTMLDivElement>) => {
     if (containerRef.current) {
       const delta = Math.max(-1, Math.min(1, e.deltaY || -e.detail))
@@ -26,7 +28,19 @@ const List = () => {
       overflowX='auto'
     >
       <NewColumnButton />
-      <ColumnsContainer />
+      {columnsBoard.length > 0 && <ColumnsContainer />}
+      {columnsBoard.length === 0 && (
+        <Flex
+          w='full'
+          h={MIN_H}
+        >
+          <Message
+            msg='Tu lista está vacía'
+            description='Actualmente no hay ninguna columna agregada. Haz clic en "Agregar Nueva Columna" para comenzar.'
+            type='info'
+          />
+        </Flex>
+      )}
     </Flex>
   )
 }

@@ -1,6 +1,6 @@
 import { Flex, Text, useColorModeValue, useDisclosure } from '@chakra-ui/react'
 import { TasksBoard } from '../types'
-import { Trash } from '@/shared/Icons'
+import { ArrowBounce, Eye, Trash } from '@/shared/Icons'
 import { SimpleIconButton } from '@/shared/components/buttons'
 import { useTasksStore } from '../store'
 import { useState } from 'react'
@@ -9,6 +9,7 @@ import Form from '@/modules/tasks/components/Form'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { GET_IS_SMALL_SCREAM, KEYS_DND } from '@/shared/constants'
+import MoveMenu from './MoveMenu'
 
 interface Props {
   task: TasksBoard
@@ -22,6 +23,7 @@ const TaskItem = ({ task }: Props) => {
   const [isOverDeleteIcon, setIsOverDeleteIcon] = useState(false)
   const { isOpen, onToggle } = useDisclosure()
   const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
+  const { isOpen: isOpenMove, onToggle: onToggleMove } = useDisclosure()
   const bg = useColorModeValue('light.primary.100', 'dark.primary.300')
   const bgHover = useColorModeValue('light.secondary.200', 'dark.secondary.200')
   const borderColor = useColorModeValue(
@@ -66,7 +68,8 @@ const TaskItem = ({ task }: Props) => {
         onMouseOver={() => setIsOverItem(true)}
         onMouseLeave={() => setIsOverItem(false)}
         onClick={() => {
-          if (!isOverDeleteIcon || isDragging) return onToggle()
+          if (!isOverDeleteIcon && !isDragging && !isSmallScream)
+            return onToggle()
         }}
         opacity={isDragging ? 0.2 : 1}
         border={isDragging ? '1px solid' : undefined}
@@ -86,7 +89,7 @@ const TaskItem = ({ task }: Props) => {
             {task.name}
           </Text>
 
-          {isOverItem && (
+          {isOverItem && !isSmallScream && (
             <SimpleIconButton
               icon={<Trash />}
               aria-label='delete'
@@ -98,6 +101,34 @@ const TaskItem = ({ task }: Props) => {
               onMouseLeave={() => setIsOverDeleteIcon(false)}
             />
           )}
+          {isSmallScream && (
+            <Flex gap={2}>
+              <SimpleIconButton
+                icon={<Eye />}
+                aria-label='view'
+                bg='transparent'
+                _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
+                size='xs'
+                onClick={() => onToggle()}
+              />
+              <SimpleIconButton
+                icon={<ArrowBounce />}
+                aria-label='move'
+                onClick={() => onToggleMove()}
+                bg='transparent'
+                _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
+                size='xs'
+              />
+              <SimpleIconButton
+                icon={<Trash />}
+                aria-label='delete'
+                onClick={() => onToggleDelete()}
+                bg='transparent'
+                _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
+                size='xs'
+              />
+            </Flex>
+          )}
         </Flex>
       </Flex>
       {isOpenDelete && task && (
@@ -106,7 +137,7 @@ const TaskItem = ({ task }: Props) => {
           onClose={onToggleDelete}
           modalHeader='Eliminar Tarea'
           modalDescription={`Estas seguro de eliminar la tarea llamada "${task.name}"? 😯`}
-          onClickConfirm={() => deleteTask(task.key)}
+          onClickConfirm={() => deleteTask({ taskKey: task.key })}
         />
       )}
       {isOpen && task && !isDragging && (
@@ -120,6 +151,19 @@ const TaskItem = ({ task }: Props) => {
             task={task}
             columnKey={task.columnKey}
             onClose={onToggle}
+          />
+        </SimpleModal>
+      )}
+
+      {isOpenMove && task && isSmallScream && (
+        <SimpleModal
+          modalHeader='Mover tarea 😬'
+          isOpen={isOpenMove}
+          onClose={onToggleMove}
+        >
+          <MoveMenu
+            task={task}
+            onClose={onToggleMove}
           />
         </SimpleModal>
       )}

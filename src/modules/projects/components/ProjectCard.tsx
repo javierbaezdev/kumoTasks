@@ -16,6 +16,8 @@ import { useState } from 'react'
 import Form from './Form'
 import { useProjectsStore } from '../store'
 import { PATHS as PATHS_BOARDS } from '@/modules/boards/paths'
+import { useTasksStore } from '@/modules/tasks/store'
+import { useBoardsStore } from '@/modules/boards/store'
 
 const stateDict: Record<string, any> = {
   ACTIVE: {
@@ -38,6 +40,8 @@ export const MIN_H = 140
 const ProjectCard = ({ project, isNew }: props) => {
   const navigate = useNavigate()
   const deleteProject = useProjectsStore((store) => store.deleteProject)
+  const deleteColumn = useBoardsStore((store) => store.deleteColumn)
+  const deleteTask = useTasksStore((store) => store.deleteTask)
   const bgCard = useColorModeValue(GRADIENTS_BG.LIGHT, GRADIENTS_BG.DARK)
   const bgHover = useColorModeValue('light.secondary.200', 'dark.secondary.200')
 
@@ -171,7 +175,11 @@ const ProjectCard = ({ project, isNew }: props) => {
           onClose={onToggleDelete}
           modalHeader='Eliminar Proyecto'
           modalDescription={`Estas seguro de eliminar el proyecto llamado "${project.name}"? 😯`}
-          onClickConfirm={() => deleteProject(project.key)}
+          onClickConfirm={() => {
+            deleteProject(project.key)
+            deleteColumn({ projectKey: project.key })
+            deleteTask({ projectKey: project.key })
+          }}
         />
       )}
     </>

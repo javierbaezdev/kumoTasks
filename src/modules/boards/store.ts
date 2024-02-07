@@ -10,7 +10,13 @@ interface State {
   limit: number
   addColumn: (column: ColumnsBoard) => void
   updateColumn: (column: ColumnsBoard) => void
-  deleteColumn: (column: string) => void
+  deleteColumn: ({
+    columnKey,
+    projectKey,
+  }: {
+    columnKey?: string
+    projectKey?: string
+  }) => void
   sortColumns: (
     activeColumnKey: string | number,
     overColumnKey: string | number
@@ -59,19 +65,30 @@ export const useBoardsStore = create<State>()(
               })
             }
           },
-          deleteColumn: (currentKey) => {
+          deleteColumn: ({ columnKey, projectKey }) => {
             const { columnsBoard } = get()
-            const newColumns: ColumnsBoard[] = columnsBoard.filter(
-              (item) => item.key !== currentKey
-            )
+            let newColumns: ColumnsBoard[] = []
+
+            if (columnKey) {
+              newColumns = columnsBoard.filter((item) => item.key !== columnKey)
+            }
+
+            if (projectKey) {
+              newColumns = columnsBoard.filter(
+                (item) => item.projectKey !== projectKey
+              )
+            }
 
             set({
               columnsBoard: newColumns,
             })
-            showToast({
-              msg: 'Columna eliminada exitosamente 🎉',
-              type: 'success',
-            })
+
+            if (!projectKey) {
+              showToast({
+                msg: 'Columna eliminada exitosamente 🎉',
+                type: 'success',
+              })
+            }
           },
           sortColumns: (activeColumnKey, overColumnKey) => {
             const { columnsBoard } = get()

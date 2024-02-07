@@ -12,7 +12,7 @@ function App() {
       <Suspense fallback={<FullScreen />}>
         <Toaster
           visibleToasts={5}
-          position='top-center'
+          position='bottom-right'
         />
         <Router>
           <RenderRoutes />

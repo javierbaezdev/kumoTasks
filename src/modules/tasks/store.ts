@@ -8,15 +8,24 @@ import { arrayMove } from '@dnd-kit/sortable'
 interface State {
   tasksBoard: TasksBoard[]
   addTask: (task: TasksBoard) => void
-  updateTask: (task: TasksBoard, showAlert: boolean) => void
-  deleteTask: (task: string) => void
+  updateTask: (task: TasksBoard, showAlert?: boolean) => void
+  deleteTask: ({
+    taskKey,
+    columnKey,
+    projectKey,
+  }: {
+    taskKey?: string
+    columnKey?: string
+    projectKey?: string
+  }) => void
   sortTask: (
     activeTaskKey: string | number,
     overTaksKey: string | number
   ) => void
   moveTaskToOtherColumn: (
     taskKey: string | number,
-    columnKey: string | number
+    columnKey: string | number,
+    showAlert?: boolean
   ) => void
 }
 
@@ -59,19 +68,32 @@ export const useTasksStore = create<State>()(
               }
             }
           },
-          deleteTask: (currentKey) => {
+          deleteTask: ({ taskKey, columnKey, projectKey }) => {
             const { tasksBoard } = get()
-            const newTasks: TasksBoard[] = tasksBoard.filter(
-              (item) => item.key !== currentKey
-            )
+            let newTasks: TasksBoard[] = []
+            if (taskKey) {
+              newTasks = tasksBoard.filter((item) => item.key !== taskKey)
+            }
+            if (columnKey) {
+              newTasks = tasksBoard.filter(
+                (item) => item.columnKey !== columnKey
+              )
+            }
+            if (projectKey) {
+              newTasks = tasksBoard.filter(
+                (item) => item.projectKey !== projectKey
+              )
+            }
 
             set({
               tasksBoard: newTasks,
             })
-            showToast({
-              msg: 'Tarea eliminada exitosamente 🎉',
-              type: 'success',
-            })
+            if (!columnKey) {
+              showToast({
+                msg: 'Tarea eliminada exitosamente 🎉',
+                type: 'success',
+              })
+            }
           },
           sortTask: (activeTaskKey, overTaskKey) => {
             const { tasksBoard } = get()
@@ -105,7 +127,7 @@ export const useTasksStore = create<State>()(
               tasksBoard: newTasks,
             })
           },
-          moveTaskToOtherColumn: (taskKey, columnKey) => {
+          moveTaskToOtherColumn: (taskKey, columnKey, showAlert) => {
             const { tasksBoard } = get()
             const tasksCopy: TasksBoard[] = cloneDeep(tasksBoard)
 
@@ -123,6 +145,13 @@ export const useTasksStore = create<State>()(
             set({
               tasksBoard: newTasks,
             })
+
+            if (showAlert) {
+              showToast({
+                msg: 'Tarea movida exitosamente 🎉',
+                type: 'success',
+              })
+            }
           },
         }
       },
