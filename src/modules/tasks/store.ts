@@ -88,7 +88,7 @@ export const useTasksStore = create<State>()(
             set({
               tasksBoard: newTasks,
             })
-            if (!columnKey) {
+            if (!columnKey && !projectKey) {
               showToast({
                 msg: 'Tarea eliminada exitosamente 🎉',
                 type: 'success',
