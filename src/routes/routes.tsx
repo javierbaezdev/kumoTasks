@@ -2,6 +2,7 @@ import { PATHS } from '@/modules/projects/paths'
 import { Navigate } from 'react-router-dom'
 import projectsRoutes from '@/modules/projects/router'
 import boardsRoutes from '@/modules/boards/router'
+import { NotFound } from '@/shared/pages'
 
 const generalsRoutes = [
   {
@@ -9,6 +10,16 @@ const generalsRoutes = [
     key: 'INDEX',
     exact: true,
     element: () => <Navigate to={`/${PATHS.BASE_MODULE.CLI}`} />,
+  },
+  {
+    path: '*',
+    key: 'all',
+    element: () => <Navigate to='404' />,
+  },
+  {
+    path: '404',
+    key: '404',
+    element: () => <NotFound />,
   },
 ]
 
