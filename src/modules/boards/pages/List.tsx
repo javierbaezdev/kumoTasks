@@ -1,7 +1,7 @@
 import { Flex } from '@chakra-ui/react'
 import { GET_STYLES_SCROLL } from '@/shared/constants'
 import { useEffect, useRef, WheelEvent } from 'react'
-import NewColumnButton, { MIN_H } from '../components/NewColumnButton'
+import NewColumnButton from '../components/NewColumnButton'
 import ColumnsContainer from '../components/ColumnsContainer'
 import { useBoardsStore } from '../store'
 import { Message } from '@/shared/components'
@@ -45,7 +45,7 @@ const List = () => {
       {columnsBoard.length === 0 && (
         <Flex
           w='full'
-          h={MIN_H}
+          h='fit-content'
         >
           <Message
             msg='Tu lista está vacía'

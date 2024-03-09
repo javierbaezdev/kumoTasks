@@ -5,9 +5,12 @@ import { showToast } from '@/shared/utils/sonnerToast'
 import { ColumnsBoard } from '@/modules/boards/types'
 import { arrayMove } from '@dnd-kit/sortable'
 
-interface State {
+interface BaseState {
   columnsBoard: ColumnsBoard[]
   limit: number
+}
+
+interface State extends BaseState {
   addColumn: (column: ColumnsBoard) => void
   updateColumn: (column: ColumnsBoard) => void
   deleteColumn: ({
@@ -21,6 +24,12 @@ interface State {
     activeColumnKey: string | number,
     overColumnKey: string | number
   ) => void
+  resetData: (showAlert?: boolean, customMsg?: string) => void
+}
+
+const initialValues: BaseState = {
+  columnsBoard: [],
+  limit: 6,
 }
 
 export const useBoardsStore = create<State>()(
@@ -28,8 +37,7 @@ export const useBoardsStore = create<State>()(
     persist(
       (set, get) => {
         return {
-          columnsBoard: [],
-          limit: 6,
+          ...initialValues,
           addColumn: (column) => {
             const { columnsBoard, limit } = get()
 
@@ -108,6 +116,19 @@ export const useBoardsStore = create<State>()(
             set({
               columnsBoard: newColumns,
             })
+          },
+          resetData: (showAlert, customMsg) => {
+            set({
+              ...initialValues,
+            })
+            if (showAlert) {
+              showToast({
+                msg: customMsg
+                  ? customMsg
+                  : `"PIZARRAS" reseteadas correctamente 🎉`,
+                type: 'success',
+              })
+            }
           },
         }
       },

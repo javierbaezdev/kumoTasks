@@ -4,12 +4,21 @@ import { project } from '@/modules/projects/types'
 import { cloneDeep } from '@/shared/utils/cloneDeep'
 import { showToast } from '@/shared/utils/sonnerToast'
 
-interface State {
+interface BaseState {
   projects: project[]
   limit: number
+}
+
+interface State extends BaseState {
   addProject: (project: project) => void
   updateProject: (project: project) => void
   deleteProject: (currentKey: string) => void
+  resetData: (showAlert?: boolean, customMsg?: string) => void
+}
+
+const initialValues: BaseState = {
+  projects: [],
+  limit: 10,
 }
 
 export const useProjectsStore = create<State>()(
@@ -17,8 +26,7 @@ export const useProjectsStore = create<State>()(
     persist(
       (set, get) => {
         return {
-          projects: [],
-          limit: 10,
+          ...initialValues,
           addProject: (project) => {
             const { projects, limit } = get()
 
@@ -71,6 +79,19 @@ export const useProjectsStore = create<State>()(
               msg: 'Proyecto eliminado exitosamente 🎉',
               type: 'success',
             })
+          },
+          resetData: (showAlert, customMsg) => {
+            set({
+              ...initialValues,
+            })
+            if (showAlert) {
+              showToast({
+                msg: customMsg
+                  ? customMsg
+                  : `"PROYECTOS" reseteados correctamente 🎉`,
+                type: 'success',
+              })
+            }
           },
         }
       },

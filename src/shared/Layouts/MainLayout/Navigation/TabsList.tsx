@@ -1,4 +1,4 @@
-import { BoxMultiple } from '@/shared/Icons'
+import { BoxMultiple, Settings } from '@/shared/Icons'
 
 export interface ItemNav {
   type: string
@@ -13,6 +13,12 @@ const itemsNavigation: ItemNav[] = [
     label: 'Proyectos',
     icon: <BoxMultiple />,
     path: `/projects`,
+  },
+  {
+    type: 'LINK',
+    label: 'Ajustes',
+    icon: <Settings />,
+    path: `/settings`,
   },
 ]
 

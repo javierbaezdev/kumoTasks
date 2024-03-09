@@ -15,6 +15,7 @@ interface Props {
   onClose: () => void
   modalHeader: string | JSX.Element
   modalDescription?: string | JSX.Element
+  textConfirm?: string
   onClickConfirm: () => void
 }
 
@@ -23,6 +24,7 @@ const ConfirmModal = ({
   onClose,
   modalHeader,
   modalDescription,
+  textConfirm,
   onClickConfirm,
 }: Props) => {
   const bg = useColorModeValue('light.secondary.300', 'dark.secondary.300')
@@ -58,7 +60,7 @@ const ConfirmModal = ({
               onClick={() => onClickConfirm()}
               ml={3}
             >
-              Si, Eliminar
+              {textConfirm || 'Si, Eliminar'}
             </SimpleButton>
           </AlertDialogFooter>
         </AlertDialogContent>
