@@ -7,6 +7,10 @@ import { arrayMove } from '@dnd-kit/sortable'
 
 interface State {
   tasksBoard: TasksBoard[]
+  isOpenModal: boolean
+  isOpenModalDelete: boolean
+  handleModal: (isOpen: boolean) => void
+  handleModalDelete: (isOpen: boolean) => void
   addTask: (task: TasksBoard) => void
   updateTask: (task: TasksBoard, showAlert?: boolean) => void
   deleteTask: ({
@@ -35,6 +39,18 @@ export const useTasksStore = create<State>()(
       (set, get) => {
         return {
           tasksBoard: [],
+          isOpenModal: false,
+          isOpenModalDelete: false,
+          handleModal: (isOpen) => {
+            set({
+              isOpenModal: isOpen,
+            })
+          },
+          handleModalDelete: (isOpen) => {
+            set({
+              isOpenModalDelete: isOpen,
+            })
+          },
           addTask: (task) => {
             const { tasksBoard } = get()
 

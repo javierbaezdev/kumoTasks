@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import ResizeTextarea from 'react-textarea-autosize'
 import {
   FormControl,
   FormErrorMessage,
@@ -49,7 +50,11 @@ const SimpleTextArea = ({
           id={idInput}
           focusBorderColor={focusBorderColor}
           borderColor={borderColor}
-          resize='vertical'
+          resize='none'
+          minRows={3}
+          minH='unset'
+          overflow='hidden'
+          as={ResizeTextarea}
           {...props}
         />
       </InputGroup>

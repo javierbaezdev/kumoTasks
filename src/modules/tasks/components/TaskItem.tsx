@@ -18,11 +18,15 @@ interface Props {
 const MINH = 100
 
 const TaskItem = ({ task }: Props) => {
-  const deleteTask = useTasksStore((store) => store.deleteTask)
+  const {
+    deleteTask,
+    isOpenModal,
+    handleModal,
+    handleModalDelete,
+    isOpenModalDelete,
+  } = useTasksStore((store) => store)
   const [isOverItem, setIsOverItem] = useState(false)
   const [isOverDeleteIcon, setIsOverDeleteIcon] = useState(false)
-  const { isOpen, onToggle } = useDisclosure()
-  const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
   const { isOpen: isOpenMove, onToggle: onToggleMove } = useDisclosure()
   const bg = useColorModeValue('light.primary.100', 'dark.primary.300')
   const bgHover = useColorModeValue('light.secondary.200', 'dark.secondary.200')
@@ -45,7 +49,7 @@ const TaskItem = ({ task }: Props) => {
       type: KEYS_DND.TASK,
       task,
     },
-    disabled: isSmallScream,
+    disabled: isSmallScream || isOpenModal,
   })
 
   const stylesDnd = {
@@ -69,7 +73,7 @@ const TaskItem = ({ task }: Props) => {
         onMouseLeave={() => setIsOverItem(false)}
         onClick={() => {
           if (!isOverDeleteIcon && !isDragging && !isSmallScream)
-            return onToggle()
+            return handleModal(!isOpenModal)
         }}
         opacity={isDragging ? 0.2 : 1}
         border={isDragging ? '1px solid' : undefined}
@@ -93,7 +97,7 @@ const TaskItem = ({ task }: Props) => {
             <SimpleIconButton
               icon={<Trash />}
               aria-label='delete'
-              onClick={() => onToggleDelete()}
+              onClick={() => handleModalDelete(!isOpenModalDelete)}
               bg='transparent'
               _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
               size='xs'
@@ -109,7 +113,7 @@ const TaskItem = ({ task }: Props) => {
                 bg='transparent'
                 _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
                 size='xs'
-                onClick={() => onToggle()}
+                onClick={() => handleModal(!isOpenModal)}
               />
               <SimpleIconButton
                 icon={<ArrowBounce />}
@@ -122,7 +126,7 @@ const TaskItem = ({ task }: Props) => {
               <SimpleIconButton
                 icon={<Trash />}
                 aria-label='delete'
-                onClick={() => onToggleDelete()}
+                onClick={() => handleModalDelete(!isOpenModalDelete)}
                 bg='transparent'
                 _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
                 size='xs'
@@ -131,26 +135,26 @@ const TaskItem = ({ task }: Props) => {
           )}
         </Flex>
       </Flex>
-      {isOpenDelete && task && (
+      {isOpenModalDelete && task && (
         <ConfirmModal
-          isOpen={isOpenDelete}
-          onClose={onToggleDelete}
+          isOpen={isOpenModalDelete}
+          onClose={() => handleModalDelete(false)}
           modalHeader='Eliminar Tarea'
           modalDescription={`Estas seguro de eliminar la tarea llamada "${task.name}"? 😯`}
           onClickConfirm={() => deleteTask({ taskKey: task.key })}
         />
       )}
-      {isOpen && task && !isDragging && (
+      {isOpenModal && task && !isDragging && (
         <SimpleModal
           modalHeader='Actualizar tarea 🧐'
-          isOpen={isOpen}
-          onClose={onToggle}
+          isOpen={isOpenModal}
+          onClose={() => handleModal(false)}
           size='4xl'
         >
           <Form
             task={task}
             columnKey={task.columnKey}
-            onClose={onToggle}
+            onClose={() => handleModal(false)}
           />
         </SimpleModal>
       )}

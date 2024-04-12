@@ -11,6 +11,7 @@ import { useState } from 'react'
 import ColumnFooter from './ColumnFooter'
 import ColumnContent from './ColumnContent'
 import ColumnHeader from './ColumnHeader'
+import { useTasksStore } from '@/modules/tasks/store'
 
 interface props {
   column: ColumnsBoard
@@ -25,6 +26,12 @@ export const MIN_W = 350
 
 const ColumnItem = ({ column }: props) => {
   const isSmallScream = GET_IS_SMALL_SCREAM()
+  const [isOpenDeleteCurrentColumn, setIsOpenDeleteCurrentColumn] =
+    useState(false)
+  const isOpenModalTask = useTasksStore((store) => store.isOpenModal)
+  const isOpenModalDeleteTask = useTasksStore(
+    (store) => store.isOpenModalDelete
+  )
   const [editMode, setEditMode] = useState<EditMode>({
     name: false,
   })
@@ -52,7 +59,12 @@ const ColumnItem = ({ column }: props) => {
       type: KEYS_DND.COLUMN,
       column,
     },
-    disabled: editMode.name || isSmallScream,
+    disabled:
+      editMode.name ||
+      isSmallScream ||
+      isOpenModalTask ||
+      isOpenModalDeleteTask ||
+      isOpenDeleteCurrentColumn,
   })
 
   const stylesDnd = {
@@ -96,6 +108,9 @@ const ColumnItem = ({ column }: props) => {
               column={column}
               editMode={editMode}
               onChangeEditMode={(newEditMode) => setEditMode(newEditMode)}
+              isOpenDeleteColumn={(isOpenDelete) =>
+                setIsOpenDeleteCurrentColumn(isOpenDelete)
+              }
             />
           </Flex>
 

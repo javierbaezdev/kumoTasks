@@ -8,14 +8,21 @@ import { Trash } from '@/shared/Icons'
 import { ConfirmModal } from '@/shared/components/modals'
 import { EditMode } from './ColumnItem'
 import { useTasksStore } from '@/modules/tasks/store'
+import { useEffect } from 'react'
 
 interface Props {
   column: ColumnsBoard
   editMode: EditMode
   onChangeEditMode: (newEditMode: EditMode) => void
+  isOpenDeleteColumn: (isOpen: boolean) => void
 }
 
-const ColumnHeader = ({ column, editMode, onChangeEditMode }: Props) => {
+const ColumnHeader = ({
+  column,
+  editMode,
+  onChangeEditMode,
+  isOpenDeleteColumn,
+}: Props) => {
   const { deleteColumn, updateColumn } = useBoardsStore((store) => store)
   const deleteTask = useTasksStore((store) => store.deleteTask)
   const { isOpen: isOpenDelete, onToggle: onToggleDelete } = useDisclosure()
@@ -33,6 +40,10 @@ const ColumnHeader = ({ column, editMode, onChangeEditMode }: Props) => {
     }
     onChangeEditMode({ ...editMode, name: false })
   }
+
+  useEffect(() => {
+    isOpenDeleteColumn(isOpenDelete)
+  }, [isOpenDelete])
 
   return (
     <>
