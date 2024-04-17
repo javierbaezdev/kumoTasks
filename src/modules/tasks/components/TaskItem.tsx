@@ -24,6 +24,8 @@ const TaskItem = ({ task }: Props) => {
     handleModal,
     handleModalDelete,
     isOpenModalDelete,
+    selectCurrentTask,
+    currentTaskSelected,
   } = useTasksStore((store) => store)
   const [isOverItem, setIsOverItem] = useState(false)
   const [isOverDeleteIcon, setIsOverDeleteIcon] = useState(false)
@@ -57,6 +59,19 @@ const TaskItem = ({ task }: Props) => {
     transform: CSS.Transform.toString(transform),
   }
 
+  const openModal = (type: 'DELETE' | 'VIEW') => {
+    selectCurrentTask(task)
+
+    if (type === 'VIEW') return handleModal(!isOpenModal)
+    if (type === 'DELETE') return handleModalDelete(!isOpenModal)
+  }
+
+  const closeModal = (type: 'DELETE' | 'VIEW') => {
+    selectCurrentTask(undefined)
+    if (type === 'VIEW') return handleModal(false)
+    if (type === 'DELETE') return handleModalDelete(false)
+  }
+
   return (
     <>
       <Flex
@@ -73,7 +88,7 @@ const TaskItem = ({ task }: Props) => {
         onMouseLeave={() => setIsOverItem(false)}
         onClick={() => {
           if (!isOverDeleteIcon && !isDragging && !isSmallScream)
-            return handleModal(!isOpenModal)
+            return openModal('VIEW')
         }}
         opacity={isDragging ? 0.2 : 1}
         border={isDragging ? '1px solid' : undefined}
@@ -97,7 +112,7 @@ const TaskItem = ({ task }: Props) => {
             <SimpleIconButton
               icon={<Trash />}
               aria-label='delete'
-              onClick={() => handleModalDelete(!isOpenModalDelete)}
+              onClick={() => openModal('DELETE')}
               bg='transparent'
               _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
               size='xs'
@@ -113,7 +128,7 @@ const TaskItem = ({ task }: Props) => {
                 bg='transparent'
                 _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
                 size='xs'
-                onClick={() => handleModal(!isOpenModal)}
+                onClick={() => openModal('VIEW')}
               />
               <SimpleIconButton
                 icon={<ArrowBounce />}
@@ -126,7 +141,7 @@ const TaskItem = ({ task }: Props) => {
               <SimpleIconButton
                 icon={<Trash />}
                 aria-label='delete'
-                onClick={() => handleModalDelete(!isOpenModalDelete)}
+                onClick={() => openModal('DELETE')}
                 bg='transparent'
                 _hover={{ bg: 'transparent', color: 'mediumPurple.300' }}
                 size='xs'
@@ -135,42 +150,47 @@ const TaskItem = ({ task }: Props) => {
           )}
         </Flex>
       </Flex>
-      {isOpenModalDelete && task && (
+      {isOpenModalDelete && task?.key === currentTaskSelected?.key && (
         <ConfirmModal
           isOpen={isOpenModalDelete}
-          onClose={() => handleModalDelete(false)}
+          onClose={() => closeModal('DELETE')}
           modalHeader='Eliminar Tarea'
           modalDescription={`Estas seguro de eliminar la tarea llamada "${task.name}"? 😯`}
-          onClickConfirm={() => deleteTask({ taskKey: task.key })}
+          onClickConfirm={() => {
+            closeModal('DELETE')
+            deleteTask({ taskKey: task.key })
+          }}
         />
       )}
-      {isOpenModal && task && !isDragging && (
+      {isOpenModal && task?.key === currentTaskSelected?.key && !isDragging && (
         <SimpleModal
           modalHeader='Actualizar tarea 🧐'
           isOpen={isOpenModal}
-          onClose={() => handleModal(false)}
+          onClose={() => closeModal('VIEW')}
           size='4xl'
         >
           <Form
             task={task}
             columnKey={task.columnKey}
-            onClose={() => handleModal(false)}
+            onClose={() => closeModal('VIEW')}
           />
         </SimpleModal>
       )}
 
-      {isOpenMove && task && isSmallScream && (
-        <SimpleModal
-          modalHeader='Mover tarea 😬'
-          isOpen={isOpenMove}
-          onClose={onToggleMove}
-        >
-          <MoveMenu
-            task={task}
+      {isOpenMove &&
+        task?.key === currentTaskSelected?.key &&
+        isSmallScream && (
+          <SimpleModal
+            modalHeader='Mover tarea 😬'
+            isOpen={isOpenMove}
             onClose={onToggleMove}
-          />
-        </SimpleModal>
-      )}
+          >
+            <MoveMenu
+              task={task}
+              onClose={onToggleMove}
+            />
+          </SimpleModal>
+        )}
     </>
   )
 }

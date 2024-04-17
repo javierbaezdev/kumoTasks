@@ -9,8 +9,10 @@ interface State {
   tasksBoard: TasksBoard[]
   isOpenModal: boolean
   isOpenModalDelete: boolean
+  currentTaskSelected: TasksBoard | undefined
   handleModal: (isOpen: boolean) => void
   handleModalDelete: (isOpen: boolean) => void
+  selectCurrentTask: (task: TasksBoard | undefined) => void
   addTask: (task: TasksBoard) => void
   updateTask: (task: TasksBoard, showAlert?: boolean) => void
   deleteTask: ({
@@ -41,6 +43,7 @@ export const useTasksStore = create<State>()(
           tasksBoard: [],
           isOpenModal: false,
           isOpenModalDelete: false,
+          currentTaskSelected: undefined,
           handleModal: (isOpen) => {
             set({
               isOpenModal: isOpen,
@@ -49,6 +52,11 @@ export const useTasksStore = create<State>()(
           handleModalDelete: (isOpen) => {
             set({
               isOpenModalDelete: isOpen,
+            })
+          },
+          selectCurrentTask: (task) => {
+            set({
+              currentTaskSelected: task,
             })
           },
           addTask: (task) => {
